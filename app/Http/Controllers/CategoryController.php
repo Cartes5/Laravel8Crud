@@ -14,17 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $categories = Category::all(['id','title','description']);
+        return response()->json($categories);
     }
 
     /**
@@ -35,7 +26,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = Category::create($request->post());
+        return response()->json([
+            'message'=>'Category Created Successfully!!',
+            'category'=>$category
+        ]);
     }
 
     /**
@@ -46,18 +41,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
-    {
-        //
+        return response()->json($category);
     }
 
     /**
@@ -69,7 +53,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $category->fill($request->post())->save();
+        return response()->json([
+            'message'=>'Category Updated Successfully!!',
+            'category'=>$category
+        ]);
     }
 
     /**
@@ -80,6 +68,9 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return response()->json([
+            'message'=>'Category Deleted Successfully!!'
+        ]);
     }
 }
